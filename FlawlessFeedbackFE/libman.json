@@ -1,0 +1,14 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "dropzone@5.7.2",
+      "destination": "wwwroot/lib/dropzone/"
+    },
+    {
+      "library": "Chart.js@3.6.0",
+      "destination": "wwwroot/lib/Chart.js/"
+    }
+  ]
+}

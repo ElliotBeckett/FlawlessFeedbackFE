@@ -1,0 +1,105 @@
+﻿@model FlawlessFeedbackFE.Models.Survey
+@using Microsoft.AspNetCore.Http
+
+@{
+    ViewData["Title"] = "Create";
+
+}
+
+<h1>Create</h1>
+
+<h4>Survey</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            @Html.HiddenFor(c => c.SurveyID)
+            <div class="form-group">
+                <label asp-for="SurveyTitle" class="control-label"></label>
+                <input asp-for="SurveyTitle" class="form-control" />
+                <span asp-validation-for="SurveyTitle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SurveyTopic" class="control-label"></label>
+                <input asp-for="SurveyTopic" class="form-control" />
+                <span asp-validation-for="SurveyTopic" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+
+                @if (Context.Session.GetString("Token") != null)
+                {
+                    <label asp-for="SurveyAuthor" class="control-label"></label>
+                    <input asp-for="SurveyAuthor" class="form-control" value=@Context.Session.GetString("UserName") readonly />
+                    <span asp-validation-for="SurveyAuthor" class="text-danger"></span>
+                }
+                else
+                {
+                    <label asp-for="SurveyAuthor" class="control-label"></label>
+                    <input asp-for="SurveyAuthor" class="form-control" />
+                    <span asp-validation-for="SurveyAuthor" class="text-danger"></span>
+                }
+            </div>
+            <div class="form-group">
+                <label asp-for="SurveyDateCreated" class="control-label"></label>
+                <input asp-for="SurveyDateCreated" class="form-control" />
+                <span asp-validation-for="SurveyDateCreated" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SurveyComments" class="control-label"></label>
+                <input asp-for="SurveyComments" class="form-control" />
+                <span asp-validation-for="SurveyComments" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SurveyImageURL" class="control-label"></label>
+                <input asp-for="SurveyImageURL" class="form-control" readonly />
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" asp-action="CreateAndRedirect" />
+                <a asp-controller="Survey" asp-action="Index" class="btn btn-secondary">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="~/lib/dropzone/dropzone.min.js"></script>
+<div class="form-group">
+    <form asp-action="UploadFile" asp-controller="Survey" class="dropzone" id="dropzone-form">
+        <div>
+            <input name="file" type="file" />
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript">
+    Dropzone.options.dropzoneForm =
+    {
+        paramName: "file",
+        maxFilesize: 20,
+        maxFiles: 1,
+        acceptedFiles: "image/*",
+
+        // Solution from: 
+        // https://stackoverflow.com/questions/50053501/rename-file-option-not-working-in-dropzone-js
+        // 'rename file option not working in dropzone.js'
+        renameFile: function (file) {
+            let newName = new Date().getTime() + '_' + file.name;
+            return newName;
+        },
+        success: function (file, response)
+        {
+
+            $("#SurveyImageURL").val(file.upload.filename);
+            file.previewElement.classList.add("dz-success");
+            console.log("Response: " + response);
+            console.log("Uploaded File: " + file.upload.filename);
+        }
+
+    }
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,122 @@
+﻿@model FlawlessFeedbackFE.Models.Survey
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Http.Extensions;
+
+@{
+    ViewData["Title"] = Model.SurveyTitle;
+    var authToken = Context.Session.GetString("Token");
+}
+<!--
+
+    Enables Breadcrumbs for web pages, may enable, but it adds clutter
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+        <li class="breadcrumb-item"><a asp-area="" asp-controller="Survey" asp-action="Index">Surveys</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@{/*@Model.SurveyTitle*/}</li>
+    </ol>
+</nav>
+    -->
+
+<h1>@Model.SurveyTitle Details</h1>
+
+<div>
+    <h4 style="padding-top: 2em">Survey</h4>
+    <hr />
+    <dl class="row">
+        @Html.HiddenFor(model => model.SurveyID)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SurveyTitle)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SurveyTitle)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SurveyTopic)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SurveyTopic)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SurveyAuthor)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SurveyAuthor)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SurveyDateCreated)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SurveyDateCreated)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SurveyComments)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SurveyComments)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SurveyImageURL)
+        </dt>
+        <dd class="col-sm-10">
+            @{ 
+                if (Url.Content(Model.SurveyImageURL) != null)
+                {
+                    @Html.DisplayFor(model => model.SurveyImageURL)
+                    <br />
+                    <img src="~/Uploads/@Url.Content(Model.SurveyImageURL)" class="detailImage" style="max-height:50%; max-width:50%;" />
+                }
+                else
+                {
+                    <p>No image has been uploaded for this survey</p>
+                }
+            }
+        </dd>
+    </dl>
+
+    @if (authToken != null)
+    {
+        <p>
+            @Html.ActionLink("Edit Survey", "Edit", new { id = Model.SurveyID }, new { @class = "btn btn-warning" })
+
+            @Html.ActionLink("Delete Survey", "Delete", new { id = Model.SurveyID }, new { @class = "btn btn-danger" })
+        </p>
+    }
+</div>
+
+<h4 style="padding-top: 2em">Associated Questions</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Questions.FirstOrDefault().QuestionID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Questions.FirstOrDefault().QuestionText)
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Questions)
+        {
+            <tr>
+                <!-- Still required data but hidden from view -->
+                @Html.HiddenFor(modelItem => item.SurveyID)
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.QuestionID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.QuestionText)
+                </td>
+                <td>
+                    @Html.ActionLink("View Question", "DetailsWithOptions", "Question", new { id = item.QuestionID }, new { @class = "btn btn-primary" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div>
+    @Html.ActionLink("Add a Question", "Create", "Question", new { id = Model.SurveyID }, new { @class = "btn btn-success" })
+    <a asp-controller="Survey" asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div>

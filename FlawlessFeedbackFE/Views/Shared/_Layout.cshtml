@@ -1,0 +1,123 @@
+﻿@using Microsoft.AspNetCore.Http;
+@using Microsoft.AspNetCore.Http.Extensions;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Flawless Feedback</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/dropzone/dropzone.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3" id="NavBar">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Flawless Feedback</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="dropdown">
+                            <a class="btn btn-outline-info dropdown-toggle" style="margin: 0px 5px 0px 5px" href="#" role="button" id="homeDropdown" data-toggle="dropdown" aria-expanded="false">
+                                Home
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="surveyDropdown">
+                                <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                <hr class="dropdown-divider">
+                                <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="FAQ">FAQ</a>
+                                <hr class="dropdown-divider">
+                                <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                                <hr class="dropdown-divider">
+                                <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Login">Login</a>
+                            </div>
+                        </li>
+                        <li class="dropdown">
+                            <a class="btn btn-outline-info dropdown-toggle" style="margin: 0px 5px 0px 5px" href="#" role="button" id="surveyDropdown" data-toggle="dropdown" aria-expanded="false">
+                                Surveys
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="surveyDropdown">
+                                <a class="dropdown-item" asp-area="" asp-controller="Survey" asp-action="Index">View all surveys</a>
+                                <hr class="dropdown-divider">
+                                <a class="dropdown-item" asp-area="" asp-controller="Survey" asp-action="Create">Create new survey</a>
+                            </div>
+                        </li>
+                        <li class="dropdown">
+                            <a class="btn btn-outline-info dropdown-toggle" style="margin: 0px 5px 0px 5px" href="#" role="button" id="questionDropdown" data-toggle="dropdown" aria-expanded="false">
+                                Questions
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="questionDropdown">
+                                <a class="dropdown-item" asp-area="" asp-controller="Question" asp-action="Index">View all questions</a>
+                                <hr class="dropdown-divider">
+                                <a class="dropdown-item" asp-area="" asp-controller="Question" asp-action="Create">Create new question</a>
+                            </div>
+                        </li>
+                        <li class="dropdown">
+                            <a class="btn btn-outline-info dropdown-toggle" style="margin: 0px 5px 0px 5px" href="#" role="button" id="optionDropdown" data-toggle="dropdown" aria-expanded="false">
+                                Options
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="optionDropdown">
+                                <a class="dropdown-item" asp-area="" asp-controller="Option" asp-action="Index">View all options</a>
+                                <hr class="dropdown-divider">
+                                <a class="dropdown-item" asp-area="" asp-controller="Option" asp-action="Create">Create new option</a>
+                            </div>
+                        </li>
+                        <li class="dropdown">
+                            <a class="btn btn-outline-info dropdown-toggle" style="margin: 0px 5px 0px 5px" href="#" role="button" id="reportDropdown" data-toggle="dropdown" aria-expanded="false">
+                                Reports
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="reportDropdown">
+                                <a class="dropdown-item" asp-area="" asp-controller="Survey" asp-action="SurveyQuestionsCountReport">View Survey Report</a>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <div class="row justify-content-center align-items-baseline">
+
+                        <!-- If the user is not logged in, show a login bar -->
+                        @if (Context.Session.GetString("Token") == null)
+                        {
+                            var lastUrl = UriHelper.GetEncodedUrl(Context.Request);
+
+                            TempData["RedirectUrl"] = lastUrl.Trim();
+
+                            <form asp-controller="Home" asp-action="Login">
+                                Username: <input type="text" id="UserName" name="UserName">
+                                Password: <input type="password" id="UserPass" name="UserPass">
+                                <input type="submit" class="btn btn-outline-success" value="Login" />
+                            </form>
+                        }
+                        else
+                        {
+                            <!-- If they are logged in, get their username and show that instead -->
+                            <div>
+                                <h4>Welcome @Context.Session.GetString("UserName")</h4>
+                                <a class="btn btn-outline-danger" asp-controller="Home" asp-action="Logout">Logout</a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            <!-- Automatically updates the Copyright year to the current year -->
+            &copy; @System.DateTime.Now.Year - Flawless Feedback - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

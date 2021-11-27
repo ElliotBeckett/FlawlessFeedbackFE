@@ -1,0 +1,70 @@
+﻿@model FlawlessFeedbackFE.Models.Survey
+@using Microsoft.AspNetCore.Http
+
+@{
+    ViewData["Title"] = "Details";
+
+    /* TODO - Replicate this on all other views for clarity */
+
+    var authToken = Context.Session.GetString("Token");
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Survey</h4>
+    <hr />
+    <dl class="row">
+
+        @Html.HiddenFor(model => model.SurveyID)
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SurveyTitle)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SurveyTitle)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SurveyTopic)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SurveyTopic)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SurveyAuthor)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SurveyAuthor)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SurveyDateCreated)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SurveyDateCreated)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SurveyComments)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SurveyComments)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SurveyImageURL)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SurveyImageURL)
+        </dd>
+    </dl>
+</div>
+<div>
+
+    @if (authToken != null)
+    {
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.SurveyID }, new { @class = "btn btn-warning" })
+
+            @Html.ActionLink("Delete", "Delete", new { id = Model.SurveyID }, new { @class = "btn btn-danger" })
+        </p>
+    }
+    <a asp-controller="Survey" asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div>

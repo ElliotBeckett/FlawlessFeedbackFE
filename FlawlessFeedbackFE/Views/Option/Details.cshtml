@@ -1,0 +1,55 @@
+﻿@model FlawlessFeedbackFE.Models.Option
+@using Microsoft.AspNetCore.Http
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Option</h4>
+    <hr />
+    <dl class="row">
+
+        @Html.HiddenFor(model => model.OptionID)
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.OptionOrder)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.OptionOrder)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.OptionText)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.OptionText)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.QuestionID)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.QuestionID)
+        </dd>
+    </dl>
+</div>
+<div>
+    @if (Context.Session.GetString("Token") != null)
+    {
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.OptionID }, new { @class = "btn btn-warning" })
+
+            @Html.ActionLink("Delete", "Delete", new { id = Model.OptionID }, new { @class = "btn btn-danger" })
+        </p>
+    }
+</div>
+<div>
+    @{
+        if (Model.QuestionID > 0)
+        {
+            @Html.ActionLink("View linked Question", "DetailsWithOptions", "Question", new { id = Model.QuestionID }, new { @class = "btn btn-secondary" })
+        }
+    }
+
+    <a asp-controller="Option" asp-action="Index" class="btn btn-secondary">Return to Option list</a>
+</div>

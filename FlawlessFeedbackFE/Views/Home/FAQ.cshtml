@@ -1,0 +1,227 @@
+﻿@{
+    ViewData["Title"] = "FAQ";
+}
+
+<h1 id="PageTop">FAQ</h1>
+
+<div class="container" style="margin-top:50px">
+    <hr />
+    <p style="text-align:center">
+        This is the frequently asked questions for the Flawless Feedback website.
+    </p>
+    <p style="text-align:center">
+        It will guide you through how to use the website and its many features.
+    </p>
+    <hr />
+</div>
+
+<div class="container" style="padding-top:20px">
+    <div class="col">
+        <div class="row" id="LoginHelp">
+            <div class="col-sm">
+                <h3 style="text-align: center; padding-top:10px">Signing in</h3>
+                <p style="padding-top:20px">
+                    Many features of the Flawless Feedback website require that users are signed in to use, this includes the ability to edit or delete surveys.
+                    <br />
+                    <br />
+                    Signing in can be done three ways:
+                </p>
+                <ul>
+                    <li>Option 1 - Using the login bar at the top of the webpage.</li>
+                    <li>Option 2 - Visiting the <a asp-area="" asp-controller="Home" asp-action="Login"><strong>login page</strong></a></li>
+                    <li>Option 3 - Clicking on Home option on the navigation bar, then selecting the "Login" option</li>
+                </ul>
+            </div>
+            <div class="col-sm">
+                <img src="~/Uploads/FAQ_Images/Login_Page_2021-11-10_10h46_41.png" class="img-fluid" alt="Image showing the login page" />
+                <img src="~/Uploads/FAQ_Images/Login_NavBar_2021-11-10_12h21_23.png" class="img-fluid" style="padding-top:50px" alt="Image showing the login nav bar" />
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <br />
+        </div>
+        <hr />
+        <div class="row">
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#ViewSection" aria-expanded="false" aria-controls="collapseExample">
+                Viewing Help
+            </button>
+            <div class="collapse" id="ViewSection">
+                <div class="row" style="padding-top:25px">
+                    <div class="col">
+                        <h3>Viewing Surveys/Questions/Options</h3>
+                        <p style="padding-top:20px">
+                            Viewing the list of available <a asp-area="" asp-controller="Survey" asp-action="index">surveys</a>, <a asp-area="" asp-controller="Question" asp-action="index">questions</a>, and <a asp-area="" asp-controller="Option" asp-action="index">options</a> can be done the same way.
+                            <br />
+                            <br />
+                            Each category can be viewed by clicking on the corresponding dropown option on the navigation bar, then selecting the "View all" option.
+                            <br />
+                            <br />
+                            Also, this menu offers a direct option to create new surveys, questions, or options.
+                        </p>
+                    </div>
+                    <div class="col">
+                        <img src="~/Uploads/FAQ_Images/View_All_DropDown_2021-11-10_11h24_28.png" class="img-fluid" alt="Image showing the nav bar drop down options" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <br />
+        </div>
+        <hr />
+        <div class="row">
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#CreateSection" aria-expanded="false" aria-controls="collapseExample">
+                Creating Help
+            </button>
+            <div class="collapse" id="CreateSection">
+                <div class="row" style="padding-top:25px; justify-content:center">
+                    <p style="text-align:center">
+                        Creating a new <a asp-area="" asp-controller="Survey" asp-action="Create">survey</a>, <a asp-area="" asp-controller="Question" asp-action="Create">question</a>, or <a asp-area="" asp-controller="Option" asp-action="Create">option</a> can all be done in several ways.
+                    </p>
+                </div>
+                <div class="row" style="padding-top:25px">
+
+                    <div class="col">
+                        <h3>Creating a new Survey/Question/Option via the dropdown menu</h3>
+                        <p style="padding-top:20px">
+                            When clicking on the corresponding dropown option on the navigation bar, there is an option to "Create new". Clicking this will take you directly to the create page for that category
+                        </p>
+                    </div>
+                    <div class="col">
+                        <img src="~/Uploads/FAQ_Images/View_All_DropDown_2021-11-10_11h24_28.png" class="img-fluid" alt="Image showing the nav bar drop down options" />
+                    </div>
+                </div>
+                <div class="row" style="padding-top:25px">
+                    <div class="col">
+                        <h3>Creating a new Survey/Question/Option from the list page</h3>
+                        <p style="padding-top:20px">
+                            When viewing a list of all surveys/questions/options, there is a "Create New" button at the top of each page.
+                        </p>
+                    </div>
+                    <div class="col">
+                        <img src="~/Uploads/FAQ_Images/Survey_Create_New_Button_2021-11-10_12h30_35.png" class="img-fluid" alt="Image showing the Create New button on the Surveys page" />
+                    </div>
+                </div>
+                <div class="row" style="padding-top:25px">
+                    <div class="col">
+                        <h3>Creating a new Question from a survey details page</h3>
+                        <p style="padding-top:20px">
+                            It is possible to create and link a question directly to a survey by clicking on the "Add a Question" button on the survey details page.
+                        </p>
+                        <p>
+                            It is also possible to do the same with Questions and Options. When viewing the details of a question, there is a button to add an option to the question
+                        </p>
+                    </div>
+                    <div class="col">
+                        <img src="~/Uploads/FAQ_Images/Create_Question_From_Survey_2021-11-10_13h32_59.png" class="img-fluid" alt="Image showing the Add a question button on the survey's details page" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <br />
+        </div>
+        <hr />
+        <div class="row">
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#EditDeleteSection" aria-expanded="false" aria-controls="collapseExample">
+                Editing and Deleting Help
+            </button>
+            <div class="collapse" id="EditDeleteSection">
+                <div class="row" style="padding-top:25px; justify-content:center">
+                    <p style="text-align:center">
+                        Before attempting to Edit or delete any part of a survey (survey, questions or options), users <strong>must</strong> be logged in. Attempting to do so without being logged in will result being redirected to the login page
+                    </p>
+                    <p style="text-align:center">
+                        Visit the <a href="#LoginHelp"><strong>login</strong></a> section for details on how to log in
+                    </p>
+                </div>
+                <div class="row" style="padding-top:25px">
+
+                    <div class="col">
+                        <h3>Accessing the Edit/Delete options</h3>
+                        <p style="padding-top:20px">
+                            Once logged in, the Edit and Delete functions will be available on the details page of a survey/question/option.
+                        </p>
+                        <p>
+                            These options are not available when not logged in, nor is the web page available.
+                        </p>
+                    </div>
+                    <div class="col">
+                        <img src="~/Uploads/FAQ_Images/Survey_Edit_Delete_Button_2021-11-10_12h30_35.png" class="img-fluid" alt="Image showing the edit and delete options for a survey" />
+                    </div>
+                </div>
+                <div class="row" style="padding-top:25px">
+                    <div class="col">
+                        <h3>Editing a Survey/Question/Option</h3>
+                        <p style="padding-top:20px">
+                            When viewing the details of a specific surveys/questions/options, there is a "Edit" button below the details displayed.
+                        </p>
+                        <p>
+                            Clicking on the edit button will take you to the edit page for the selected surveys/questions/option.
+                            Edits can be made as required and saved or discarded.
+                        </p>
+                    </div>
+                    <div class="col">
+                        <img src="~/Uploads/FAQ_Images/Edit_Page_2021-11-10_13h58_17.png" class="img-fluid" alt="Image showing the Edit Survey details page" />
+                    </div>
+                </div>
+                <div class="row" style="padding-top:25px">
+                    <div class="col">
+                        <h3>Deleting a Survey/Question/Option</h3>
+                        <p style="padding-top:20px">
+                            When viewing the details of a specific surveys/questions/options, there is a "Delete" button below the details displayed.
+                        </p>
+                        <p>
+                            Clicking on the delete button will take you to the delete page for the selected surveys/questions/option.
+                            A prompt will be displayed to confirm whether to delete the entry or not.
+                        </p>
+                    </div>
+                    <div class="col">
+                        <img src="~/Uploads/FAQ_Images/Delete_Page_2021-11-10_13h59_04.png" class="img-fluid" alt="Image showing the Delete a Survey confirmation page" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <br />
+        </div>
+        <hr />
+        <div class="row">
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#ChartsExportSection" aria-expanded="false" aria-controls="collapseExample">
+                Charts and Export help
+            </button>
+            <div class="collapse" id="ChartsExportSection">
+                <div class="row" style="padding-top:25px">
+                    <div class="col">
+                        <h3>Accessing the Chart options</h3>
+                        <p style="padding-top:20px">
+                            Charts can be viewed by accessing the <a asp-area="" asp-controller="Survey" asp-action="SurveyQuestionsCountReport">reports</a> page.
+                            This can be done by clicking on the Reports option on the navigation bar and select the desired report 
+                        </p>
+                    </div>
+                    <div class="col">
+                        <img src="~/Uploads/FAQ_Images/Chart_Export_Page_2021-11-10_14h44_15.png" class="img-fluid" alt="Image showing the chart option on the nav bar" />
+                    </div>
+                </div>
+                <div class="row" style="padding-top:25px">
+                    <div class="col">
+                        <h3>Exporting a Chart</h3>
+                        <p>
+                            When a chart has been generated and selected, the results can be downloaded by clicking on the "Export" button at the bottom of the page.
+                            The results will be downloaded and saved automatically
+                        </p>
+                    </div>
+                    <div class="col">
+                        <img src="~/Uploads/FAQ_Images/Export_Button_2021-11-10_14h48_31.png" class="img-fluid" alt="Image showing the Export report button" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr />
+    </div>
+    <a href="#NavBar">Return to top</a>
+</div>

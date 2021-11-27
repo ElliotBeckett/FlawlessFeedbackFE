@@ -1,0 +1,37 @@
+﻿@model IEnumerable<FlawlessFeedbackFE.Models.Question>
+
+@{
+    ViewData["Title"] = "Questions Index";
+}
+
+<h1>Questions</h1>
+
+<p style="padding:15px 0px 15px 0px">
+    <a asp-action="Create" class="btn btn-success">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.QuestionText)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="justify-content-end align-items-baseline">
+                @Html.HiddenFor(modelItem => item.QuestionID)
+                <td>
+                    @Html.DisplayFor(modelItem => item.QuestionText)
+                </td>
+                <!-- Still required data but hidden from view -->
+                @Html.HiddenFor(modelItem => item.SurveyID)
+                <td>
+                    @Html.ActionLink("Details", "DetailsWithOptions", new { id = item.QuestionID }, new { @style = "justify-self-end", @class = "btn btn-primary" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

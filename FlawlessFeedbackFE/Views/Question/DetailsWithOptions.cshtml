@@ -1,0 +1,96 @@
+﻿@model FlawlessFeedbackFE.Models.Question
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Http.Extensions
+
+
+@{
+    ViewData["Title"] = Model.QuestionText;
+    var authToken = Context.Session.GetString("Token");
+    var currUrl = UriHelper.GetEncodedUrl(Context.Request);
+
+    TempData["RedirectUrl2"] = currUrl.Trim();
+
+
+}
+
+<h1>@Model.QuestionText Details</h1>
+
+<div>
+    <h4 style="padding-top: 2em">Question</h4>
+    <hr />
+    <dl class="row">
+
+        @Html.HiddenFor(model => model.QuestionID)
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.QuestionText)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.QuestionText)
+        </dd>
+        @Html.HiddenFor(model => model.SurveyID)
+    </dl>
+</div>
+
+<div>
+
+    @if (Context.Session.GetString("Token") != null)
+    {
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.QuestionID }, new { @class = "btn btn-warning" })
+
+            @Html.ActionLink("Delete", "Delete", new { id = Model.QuestionID }, new { @class = "btn btn-danger" })
+        </p>
+    }
+
+</div>
+
+<h2 style="padding-top:2em">Associated Options</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Options.FirstOrDefault().OptionID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Options.FirstOrDefault().OptionOrder)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Options.FirstOrDefault().OptionText)
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Options)
+        {
+            <tr>
+                <!-- Still required data but hidden from view -->
+                @Html.HiddenFor(modelItem => item.QuestionID)
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.OptionID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OptionOrder)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OptionText)
+                </td>
+                <td>
+                    @Html.ActionLink("View Option", "Details", "Option", new { id = item.OptionID }, new { @class = "btn btn-success" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div>
+    @Html.ActionLink("Add a Option", "Create", "Option", new { id = Model.QuestionID }, new { @class = "btn btn-success" })
+    @{
+        if (Model.SurveyID > 0)
+        {
+            @Html.ActionLink("View linked Survey", "DetailsWithQuestions", "Survey", new { id = Model.SurveyID }, new { @class = "btn btn-secondary" })
+        }
+    }
+    <a asp-controller="Question" asp-action="Index" class="btn btn-secondary">Return to Question list</a>
+</div>

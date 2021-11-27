@@ -1,0 +1,19 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<h3>Charts</h3>
+
+<!-- Create a reference to the chart.js library-->
+<script src="~/lib/Chart.js/chart.js"></script>
+
+<!-- Adds a HTML canvas which can be dynamically drawn on -->
+<div><canvas id="barchart"></canvas></div>
+
+<!-- Retrieve the chart object from ViewDAta -- Casting it to the correct type as it is removed -->
+@{ ChartJSCore.Models.Chart chart = (ChartJSCore.Models.Chart)TempData["SurveyQuestionChart"];}
+
+<!-- Use the CreateChartCode method on the chart object to output the raw javascript to the barchar element -->
+<script>
+    @Html.Raw(chart.CreateChartCode("barchart"))
+</script>

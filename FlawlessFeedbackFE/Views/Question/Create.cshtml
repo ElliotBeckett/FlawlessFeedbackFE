@@ -1,0 +1,43 @@
+﻿@model FlawlessFeedbackFE.Models.Question
+
+@{
+    ViewData["Title"] = "Create";
+    var id = ViewContext.RouteData.Values["id"];
+}
+
+<h1>Create</h1>
+
+<h4>Question</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <!-- QuestionID is still required data to add a new Question, but hidden from view-->
+            @Html.HiddenFor(c => c.QuestionID)
+
+            <div class="form-group">
+                <label asp-for="QuestionText" class="control-label"></label>
+                <textarea asp-for="QuestionText" rows="5" class="form-control"></textarea>
+                <span asp-validation-for="QuestionText" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Select Survey</label>
+                <select id="drpSurveyList" class="form-control" asp-for="SurveyID" asp-items="@(new SelectList(@ViewBag.ListOfSurveys, "Value", "Text"))">
+                    <option value="">--Select--</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" asp-action="CreateAndRedirect" />
+                <a asp-controller="Question" asp-action="Index" class="btn btn-secondary">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,74 @@
+﻿@model IEnumerable<FlawlessFeedbackFE.Models.Survey>
+
+@{
+    ViewData["Title"] = "Surveys Index";
+}
+
+<h1>Surveys</h1>
+
+<p style="padding:15px 0px 15px 0px">
+    <a asp-action="Create" class="btn btn-success">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SurveyTitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SurveyTopic)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SurveyAuthor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SurveyDateCreated)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SurveyComments)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SurveyImageURL)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <!-- Still required data but hidden from view -->
+                @Html.HiddenFor(modelItem => item.SurveyID)
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.SurveyTitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SurveyTopic)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SurveyAuthor)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SurveyDateCreated)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SurveyComments)
+                </td>
+                <td>
+                    @if (!String.IsNullOrWhiteSpace(item.SurveyImageURL))
+                    {
+                        <img src="~/Uploads/@item.SurveyImageURL" class="detailImage" style="max-height:30%; max-width:30%;" />
+                    }
+                    else
+                    {
+                        <img src="~/Uploads/Blank_Image.png" class="detailImage" style="max-height:30%; max-width:30%;" />
+                    }
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "DetailsWithQuestions", new { id = item.SurveyID }, new { @class = "btn btn-primary" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
