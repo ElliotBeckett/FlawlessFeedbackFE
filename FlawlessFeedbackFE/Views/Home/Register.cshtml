@@ -1,0 +1,48 @@
+﻿@model FlawlessFeedbackFE.Models.UserInfo
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h1>Register</h1>
+
+<hr />
+<div class="row justify-content-center" style="padding: 100px 0px 10px 0px">
+    <div class="col-md-4 align-items-center">
+        <form asp-action="Register">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            @Html.HiddenFor(c => c.UserInfoID)
+
+            <div class="form-group">
+                <label asp-for="UserName" class="control-label"></label>
+                <input asp-for="UserName" class="form-control" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserEmail" class="control-label"></label>
+                <input asp-for="UserEmail" class="form-control" type="email" onfocus="this.placeholder=''" placeholder="name@example.com" />
+                <span asp-validation-for="UserEmail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserPass" class="control-label"></label>
+                <input asp-for="UserPass" class="form-control" type="password" onfocus="this.placeholder=''" placeholder="password" />
+                <span asp-validation-for="UserPass" class="text-danger"></span>
+            </div>
+
+            @Html.HiddenFor(c => c.UserRoleID)
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -10,13 +10,13 @@
             <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="UserName" class="control-label"></label>
-                <input asp-for="UserName" class="form-control" placeholder="name@example.com"/>
-                <span asp-validation-for="UserName" class="text-danger"></span>
+                <label asp-for="UserEmail" class="control-label"></label>
+                <input asp-for="UserEmail" onfocus="this.placeholder=''" type="email" class="form-control" placeholder="name@example.com" />
+                <span asp-validation-for="UserEmail" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="UserPass" class="control-label"></label>
-                <input asp-for="UserPass" type="password" class="form-control" placeholder="Password_123" />
+                <input asp-for="UserPass" onfocus="this.placeholder=''" type="password" class="form-control" placeholder="Password_123" />
                 <span asp-validation-for="UserPass" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -29,6 +29,3 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
-
-
-

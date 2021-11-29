@@ -1,4 +1,5 @@
-﻿using FlawlessFeedbackFE.Models;
+﻿using FlawlessFeedbackFE.Helpers;
+using FlawlessFeedbackFE.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -57,13 +58,18 @@ namespace FlawlessFeedbackFE.Controllers
             {
                 string token = response.Content.ReadAsStringAsync().Result;
 
+                // Send the userInfo to the API to get the userName
+                var getUsername = _client.PostAsJsonAsync("Token/GetUserName", userInfo).Result;
+
+                // Read the content of the returned username and turn it back into a string
+                var userName = getUsername.Content.ReadAsStringAsync().Result;
+
                 HttpContext.Session.SetString("Token", token);
-                HttpContext.Session.SetString("UserName", userInfo.UserName);
+                HttpContext.Session.SetString("UserName", userName.ToString());
 
 #if DEBUG
-                var userName = HttpContext.Session.GetString("UserName");
+                //var userName = HttpContext.Session.GetString("UserName");
 #endif
-
 
                 if (!String.IsNullOrWhiteSpace(lastUrl))
                 {
@@ -88,6 +94,27 @@ namespace FlawlessFeedbackFE.Controllers
             }
 
             return View();
+        }
+
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Register(UserInfo userInfo)
+        {
+            try
+            {
+                ApiRequest<UserInfo>.Post(_client, "User", userInfo);
+
+                Login(userInfo);
+                return RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
     }
 }

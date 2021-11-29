@@ -72,8 +72,12 @@ namespace FlawlessFeedbackFE.Controllers
         {
             try
             {
-                ApiRequest<Survey>.Post(_client, surveyController, survey);
-                return RedirectToAction(nameof(Index));
+                if (_check.IsLoggedIn(_client, HttpContext))
+                {
+                    ApiRequest<Survey>.Post(_client, surveyController, survey);
+                    return RedirectToAction(nameof(Index));
+                }
+                return RedirectToAction("Login", "Home");
             }
             catch (Exception e)
             {
@@ -92,9 +96,13 @@ namespace FlawlessFeedbackFE.Controllers
         {
             try
             {
-                var result = ApiRequest<Survey>.Post(_client, surveyController, survey);
+                if (_check.IsLoggedIn(_client, HttpContext))
+                {
+                    var result = ApiRequest<Survey>.Post(_client, surveyController, survey);
 
-                return RedirectToAction("DetailsWithQuestions", "Survey", new { id = result.SurveyID});
+                    return RedirectToAction("DetailsWithQuestions", "Survey", new { id = result.SurveyID });
+                }
+                return RedirectToAction("Login", "Home");
             }
             catch (Exception e)
             {
@@ -188,7 +196,6 @@ namespace FlawlessFeedbackFE.Controllers
                     Debug.WriteLine("Method Name: " + fileName);
                     string filePath = Path.Combine(folderRoot, fileName);
 
-
                     using (var stream = new FileStream(filePath, FileMode.Create))
                     {
                         await file.CopyToAsync(stream);
@@ -197,11 +204,11 @@ namespace FlawlessFeedbackFE.Controllers
                     return Ok(new { success = true, response = "File Uploaded" });
                 }
 
-                return BadRequest(new { success = false, response = "No file found"});
+                return BadRequest(new { success = false, response = "No file found" });
             }
             catch (Exception e)
             {
-                return BadRequest(new { success = false, response = e.Message});
+                return BadRequest(new { success = false, response = e.Message });
             }
         }
 
