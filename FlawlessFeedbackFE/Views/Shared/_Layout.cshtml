@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Http;
 @using Microsoft.AspNetCore.Http.Extensions;
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -77,28 +78,36 @@
                         </li>
                     </ul>
 
-                    <div class="row justify-content-center align-items-baseline">
+                    <div class="row justify-content-center align-items-baseline" id="loginBar">
+                        @{
 
-                        <!-- If the user is not logged in, show a login bar -->
-                        @if (Context.Session.GetString("Token") == null)
-                        {
-                            var lastUrl = UriHelper.GetEncodedUrl(Context.Request);
+                            <!-- If the user is not logged in, show a login bar -->
+                            @if (Context.Session.GetString("Token") == null)
+                            {
+                                var lastUrl = UriHelper.GetEncodedUrl(Context.Request);
 
-                            TempData["RedirectUrl"] = lastUrl.Trim();
+                                TempData["RedirectUrl"] = lastUrl.Trim();
 
-                            <form asp-controller="Home" asp-action="Login">
-                                Email: <input type="email" id="UserEmail" name="UserEmail">
-                                Password: <input type="password" id="UserPass" name="UserPass">
-                                <input type="submit" class="btn btn-outline-success" value="Login" />
-                            </form>
-                        }
-                        else
-                        {
-                            <!-- If they are logged in, get their username and show that instead -->
-                            <div>
-                                <h4>Welcome @Context.Session.GetString("UserName")</h4>
-                                <a class="btn btn-outline-danger" asp-controller="Home" asp-action="Logout">Logout</a>
-                            </div>
+                                <form asp-controller="Home" asp-action="Login" id="loginBar">
+                                    Email: <input type="email" id="UserEmail" name="UserEmail">
+                                    Password: <input type="password" id="UserPass" name="UserPass">
+                                    <input type="submit" class="btn btn-outline-success mx-4" value="Login" />
+                                </form>
+                                <div>
+                                    <a class="btn btn-primary" asp-controller="Home" asp-action="Register">Register</a>
+                                </div>
+                            }
+                            else
+                            {
+                                <!-- If they are logged in, get their username and show that instead -->
+
+                                <div class="d-flex justify-content-xl-around mx-1">
+                                    <h4 class="mx-4">Welcome @Context.Session.GetString("UserName")</h4>
+                                    <a class="btn btn-outline-danger" asp-controller="Home" asp-action="Logout">Logout</a>
+                                </div>
+
+                            }
+
                         }
                     </div>
                 </div>
@@ -117,6 +126,27 @@
             &copy; @System.DateTime.Now.Year - Flawless Feedback - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
+
+    <!-- JS script to detect the size of the users screen and toggle the login/welcome bar on and off.-->
+    <script>
+    
+        function myFunction(x) {
+
+            var loginBar = document.getElementById("loginBar");
+
+            if (x.matches) { // If media query matches
+                loginBar.hidden = true;
+            }
+            else {
+                loginBar.hidden = false;
+            }
+        }
+
+        var x = window.matchMedia("(max-width: 1350px)")
+        myFunction(x) // Call listener function at run time
+        x.addListener(myFunction) // Attach listener function on state changes
+    </script>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
