@@ -3,6 +3,7 @@ using FlawlessFeedbackFE.Models;
 using FlawlessFeedbackFE.Models.ViewModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,12 +39,21 @@ namespace FlawlessFeedbackFE.Controllers
         // GET: UserController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            try
+            {
+                var user = ApiRequest<UserInfo>.GetSingleRecord(_client, $"{userController}/GetSingleUserWithRole", id);
+                return View(user);
+            }
+            catch (Exception e)
+            {
+                return NotFound(e.Message);
+            }
         }
 
         // GET: UserController/Create
         public ActionResult Create()
         {
+            GenerateUserRoleDDL();
             return View();
         }
 
@@ -103,5 +113,22 @@ namespace FlawlessFeedbackFE.Controllers
                 return View();
             }
         }
+
+        #region Custom Methods
+
+        public ActionResult GenerateUserRoleDDL()
+        {
+            UserRoleViewModel model = new UserRoleViewModel();
+
+            var svModel = ApiRequest<UserRole>.GetEnumerable(_client, "Role").ToList();
+
+            model.ListOfRoles = svModel.Select(x => new SelectListItem { Value = x.UserRoleID.ToString(), Text = x.UserRoleTitle }).ToList();
+
+            ViewBag.ListOfRoles = model.ListOfRoles;
+
+            return View();
+        }
+
+        #endregion Custom Methods
     }
 }
